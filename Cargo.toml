@@ -1,5 +1,5 @@
 [package]
-name = "deck_api"
+name = "range_management_deck_panel_api"
 version = "0.1.0"
 edition = "2018"
 build = "build.rs"

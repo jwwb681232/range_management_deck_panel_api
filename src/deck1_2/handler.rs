@@ -1,11 +1,9 @@
-use std::fs::File;
 use actix_web::{get, post, Responder, web, Result, HttpResponse};
 use serde::{Serialize,Deserialize};
 use crate::Deck;
 use std::io::{Read, Write};
 use actix_web::http::StatusCode;
-use actix_web::web::Data;
-use crate::error::DeckError;
+use crate::helper::open_file;
 use crate::response::SuccessResponse;
 
 #[derive(Serialize)]
@@ -149,16 +147,4 @@ pub async fn reset(form: web::Form<ResetForm>, deck: web::Data<Deck>) -> Result<
             status: "success".to_string()
         }
     ))
-}
-
-
-fn open_file(deck: &Data<Deck>, deck_file: &String, write:bool) -> Result<File,DeckError> {
-
-    if !write {
-        std::fs::File::open(format!("{}\\{}", &deck.file_path,deck_file))
-            .map_err(|_e| DeckError::FileNotFound { file_name: format!("{}\\{}", &deck.file_path,deck_file) })
-    }else{
-        std::fs::OpenOptions::new().write(true).open(format!("{}\\{}", &deck.file_path,deck_file))
-            .map_err(|_e| DeckError::FileNotFound { file_name: format!("{}\\{}", &deck.file_path,deck_file) })
-    }
 }
