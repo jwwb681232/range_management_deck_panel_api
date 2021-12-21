@@ -13,24 +13,28 @@ pub struct Block1{
     trip_alarm: Option<String>,
     start_fail_alarm: Option<String>,
     stop_fail_alarm: Option<String>,
+    hepa_filter_alarm: Option<String>,
+    air_flow_switch: Option<String>,
 }
 
 #[derive(Serialize)]
 pub struct Block2{
-    on: Option<String>,
-    remote: Option<String>,
-    trip_alarm: Option<String>,
-    start_fail_alarm: Option<String>,
-    stop_fail_alarm: Option<String>,
+    co_sensor: Option<String>,
+    co2_sensor: Option<String>,
+    co_sensor_fault: Option<String>,
+    co2_sensor_fault: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct Block3{
+    air_block_alarm: Option<String>,
 }
 
 #[derive(Serialize)]
 pub struct Status {
     block1:Block1,
     block2:Block2,
-    air_flow_measurement: Option<String>,
-    leading_monitoring_status: Option<String>,
-    supply_air_temperature: Option<String>,
+    block3:Block3,
 }
 
 
@@ -46,22 +50,21 @@ pub async fn index(deck: web::Data<Deck>) -> Result<impl Responder> {
         message: "success".to_string(),
         data: Some(Status {
             block1: Block1 {
-                on:Some(decode_contents[0].to_string()),
+                on: Some(decode_contents[0].to_string()),
                 remote: Some(decode_contents[1].to_string()),
                 trip_alarm: Some(decode_contents[2].to_string()),
                 start_fail_alarm: Some(decode_contents[3].to_string()),
                 stop_fail_alarm: Some(decode_contents[4].to_string()),
+                hepa_filter_alarm: Some(decode_contents[5].to_string()),
+                air_flow_switch: Some(decode_contents[6].to_string())
             },
             block2: Block2 {
-                on: Some(decode_contents[5].to_string()),
-                remote: Some(decode_contents[6].to_string()),
-                trip_alarm: Some(decode_contents[7].to_string()),
-                start_fail_alarm: Some(decode_contents[8].to_string()),
-                stop_fail_alarm: Some(decode_contents[9].to_string()),
+                co_sensor: Some(decode_contents[7].to_string()),
+                co2_sensor: Some(decode_contents[8].to_string()),
+                co_sensor_fault: Some(decode_contents[9].to_string()),
+                co2_sensor_fault: Some(decode_contents[10].to_string())
             },
-            air_flow_measurement: Some(decode_contents[10].to_string()),
-            leading_monitoring_status: Some(decode_contents[11].to_string()),
-            supply_air_temperature: Some(decode_contents[12].to_string()),
+            block3: Block3 { air_block_alarm: Some(decode_contents[11].to_string()) }
         }),
         status: "success".to_string()
     };

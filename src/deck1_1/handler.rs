@@ -7,15 +7,61 @@ use crate::helper::open_file;
 use crate::response::SuccessResponse;
 
 #[derive(Serialize)]
-pub struct Status {
+pub struct Block1{
+    on: Option<String>,
+    remote: Option<String>,
+    trip_alarm: Option<String>,
+    start_fail_alarm: Option<String>,
+    stop_fail_alarm: Option<String>,
+    air_flow_switch: Option<String>,
+    supply_air_temperature: Option<String>,
+    rs485_lost_com: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct Block2{
+    on: Option<String>,
+    remote:Option<String>,
+    trip_alarm: Option<String>,
+    start_fail_alarm: Option<String>,
+    stop_fail_alarm: Option<String>,
+    hepa_filter_alarm: Option<String>,
+    air_flow_switch: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct Block3{
     on: Option<String>,
     remote: Option<String>,
     trip_alarm: Option<String>,
     start_fail_alarm: Option<String>,
     stop_fail_alarm: Option<String>,
     hepa_filter_alarm: Option<String>,
-    air_flow_measurement: Option<String>,
-    leading_monitoring_status: Option<String>,
+    air_flow_switch: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct Block4{
+    co_sensor: Option<String>,
+    co2_sensor: Option<String>,
+    co_sensor_fault: Option<String>,
+    co2_sensor_fault: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct AirBlockAlarm{
+    air_block_alarm: Option<String>,
+}
+
+#[derive(Serialize)]
+pub struct Status {
+    block1:Block1,
+    block2:Block2,
+    block3:Block3,
+    block4:Block4,
+    ahu_bst_d21:AirBlockAlarm,
+    ahu_bst_d12:AirBlockAlarm,
+    ahu_bst_d13:AirBlockAlarm,
 }
 
 
@@ -26,18 +72,21 @@ pub async fn index(deck: web::Data<Deck>) -> Result<impl Responder> {
     open_file(&deck,&deck.files.deck1_1_read,false)?.read_to_string(&mut contents).unwrap();
     let decode_contents: Vec<String> = contents.split(";").map(|s| s.to_string()).collect();
 
+    println!("{:?}",decode_contents.get(0));
+    println!("{:?}",decode_contents.get(29));
+
     let success_response = SuccessResponse{
         code: StatusCode::OK.as_u16(),
         message: "success".to_string(),
-        data: Some(Status {
-            on:                        Some(decode_contents[0].to_string()),
-            remote:                    Some(decode_contents[1].to_string()),
-            trip_alarm:                Some(decode_contents[2].to_string()),
-            start_fail_alarm:          Some(decode_contents[3].to_string()),
-            stop_fail_alarm:           Some(decode_contents[4].to_string()),
-            hepa_filter_alarm:         Some(decode_contents[5].to_string()),
-            air_flow_measurement:      Some(decode_contents[6].to_string()),
-            leading_monitoring_status: Some(decode_contents[7].to_string()),
+        data: Some(Block1{
+            on: decode_contents.get(29),
+            remote: None,
+            trip_alarm: None,
+            start_fail_alarm: None,
+            stop_fail_alarm: None,
+            air_flow_switch: None,
+            supply_air_temperature: None,
+            rs485_lost_com: None
         }),
         status: "success".to_string()
     };
