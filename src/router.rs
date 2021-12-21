@@ -8,6 +8,7 @@ pub fn deck1_1_service() -> Scope {
         .service(deck1_1::handler::index)
         .service(deck1_1::handler::start)
         .service(deck1_1::handler::reset)
+        .service(deck1_1::handler::isolate)
 }
 
 pub fn deck1_2_service() -> Scope {
@@ -15,6 +16,7 @@ pub fn deck1_2_service() -> Scope {
         .service(deck1_2::handler::index)
         .service(deck1_2::handler::start)
         .service(deck1_2::handler::reset)
+        .service(deck1_2::handler::isolate)
 }
 
 pub fn deck5_service() -> Scope {

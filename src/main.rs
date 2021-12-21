@@ -61,11 +61,13 @@ fn init() {
     println!("{}","Deck Api Started On http://127.0.0.1:8008\r\n
 Read Deck 1 Panel 1 GET http://127.0.0.1:8008/deck1-1\r\n
 Start Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:8008/deck1-1/start\r
-Reset Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:8008/deck1-1/reset\r\n
+Reset Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:8008/deck1-1/reset\r
+Isolate VESDA Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:8008/deck1-1/vesda/isolate\r\n
 
 Read Deck 1 Panel 2 GET http://127.0.0.1:8008/deck1-2\r
 Start Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:8008/deck1-2/start\r
-Reset Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:8008/deck1-2/reset\r\n
+Reset Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:8008/deck1-2/reset\r
+Isolate VESDA Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:8008/deck1-1/vesda/isolate\r\n
 
 Read Deck 5 GET http://127.0.0.1:8008/deck5\r
 Start Deck 5 POST [status=1] To http://127.0.0.1:8008/deck5/start\r

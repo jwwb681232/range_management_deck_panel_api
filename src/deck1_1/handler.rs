@@ -174,3 +174,31 @@ pub async fn reset(form: web::Form<ResetForm>, deck: web::Data<Deck>) -> Result<
         }
     ))
 }
+
+#[derive(Deserialize)]
+pub struct IsolateForm {
+    status: u8,
+}
+
+#[post("/vesda/isolate")]
+pub async fn isolate(form: web::Form<IsolateForm>, deck: web::Data<Deck>) -> Result<impl Responder> {
+    let mut contents = String::new();
+
+    open_file(&deck,&deck.files.deck1_1_write,false)?.read_to_string(&mut contents).unwrap();
+    let mut decode_contents: Vec<String> = contents.split(";").map(|s| s.to_string()).collect();
+    decode_contents[2] = form.status.to_string();
+    /*****************************************************************************************/
+
+    let write_content = decode_contents.join(";");
+    open_file(&deck,&deck.files.deck1_1_write,true)?.write_all(write_content.as_bytes()).unwrap();
+
+
+    Ok(HttpResponse::Ok().json(
+        SuccessResponse{
+            code: StatusCode::OK.as_u16(),
+            message: "success".to_string(),
+            data: Some(write_content),
+            status: "success".to_string()
+        }
+    ))
+}
