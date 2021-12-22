@@ -48,7 +48,7 @@ async fn main() -> std::io::Result<()> {
             .service(deck1_2_service())
             .service(deck5_service())
         )
-        .bind("127.0.0.1:8008")?
+        .bind("127.0.0.1:81")?
         .run()
         .await
 }
@@ -58,19 +58,19 @@ fn init() {
     env_logger::init();
     dotenv::dotenv().ok();
 
-    println!("{}","Deck Api Started On http://127.0.0.1:8008\r\n
-Read Deck 1 Panel 1 GET http://127.0.0.1:8008/deck1-1\r\n
-Start Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:8008/deck1-1/start\r
-Reset Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:8008/deck1-1/reset\r
-Isolate VESDA Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:8008/deck1-1/vesda/isolate\r\n
+    println!("{}","Deck Api Started On http://127.0.0.1:81/api/maintenance\r\n
+Read Deck 1 Panel 1 GET http://127.0.0.1:81/api/maintenance/deck1-1\r\n
+Start Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck1-1/start\r
+Reset Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck1-1/reset\r
+Isolate VESDA Deck 1 Panel 1 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck1-1/vesda/isolate\r\n
 
-Read Deck 1 Panel 2 GET http://127.0.0.1:8008/deck1-2\r
-Start Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:8008/deck1-2/start\r
-Reset Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:8008/deck1-2/reset\r
-Isolate VESDA Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:8008/deck1-1/vesda/isolate\r\n
+Read Deck 1 Panel 2 GET http://127.0.0.1:81/api/maintenance/deck1-2\r
+Start Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck1-2/start\r
+Reset Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck1-2/reset\r
+Isolate VESDA Deck 1 Panel 2 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck1-1/vesda/isolate\r\n
 
-Read Deck 5 GET http://127.0.0.1:8008/deck5\r
-Start Deck 5 POST [status=1] To http://127.0.0.1:8008/deck5/start\r
-Reset Deck 5 POST [status=1] To http://127.0.0.1:8008/deck5/reset\r
+Read Deck 5 GET http://127.0.0.1:81/api/maintenance/deck5\r
+Start Deck 5 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck5/start\r
+Reset Deck 5 POST [status=1] To http://127.0.0.1:81/api/maintenance/deck5/reset\r
 ");
 }
