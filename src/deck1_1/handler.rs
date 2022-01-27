@@ -14,9 +14,9 @@ pub struct AhuBstD21 {
     start_fail_alarm: Option<String>,
     stop_fail_alarm: Option<String>,
     air_flow_switch: Option<String>,
+    air_block_alarm: Option<String>,
     supply_air_temperature: Option<String>,
     rs485_lost_com: Option<String>,
-    air_block_alarm: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -82,9 +82,9 @@ pub async fn index(deck: web::Data<Deck>) -> Result<impl Responder> {
                 start_fail_alarm: Some(decode_contents[3].to_string()),
                 stop_fail_alarm: Some(decode_contents[4].to_string()),
                 air_flow_switch: Some(decode_contents[5].to_string()),
-                supply_air_temperature: Some(decode_contents[6].to_string()),
-                rs485_lost_com: Some(decode_contents[7].to_string()),
-                air_block_alarm: Some(decode_contents[8].to_string()),
+                air_block_alarm: Some(decode_contents[6].to_string()),
+                supply_air_temperature: Some(decode_contents[7].to_string()),
+                rs485_lost_com: Some(decode_contents[8].to_string()),
             },
             ahu_bst_d12: AhuBstD12 {
                 on: Some(decode_contents[9].to_string()),
@@ -94,7 +94,7 @@ pub async fn index(deck: web::Data<Deck>) -> Result<impl Responder> {
                 stop_fail_alarm: Some(decode_contents[13].to_string()),
                 hepa_filter_alarm: Some(decode_contents[14].to_string()),
                 air_flow_switch: Some(decode_contents[15].to_string()),
-                air_block_alarm: Some(decode_contents[16].to_string()),
+                air_block_alarm: Some(decode_contents[16].to_string())
             },
             ahu_bst_d13: AhuBstD13 {
                 on: Some(decode_contents[17].to_string()),
@@ -104,13 +104,13 @@ pub async fn index(deck: web::Data<Deck>) -> Result<impl Responder> {
                 stop_fail_alarm: Some(decode_contents[21].to_string()),
                 hepa_filter_alarm: Some(decode_contents[22].to_string()),
                 air_flow_switch: Some(decode_contents[23].to_string()),
-                air_block_alarm: Some(decode_contents[24].to_string()),
+                air_block_alarm: Some(decode_contents[24].to_string())
             },
             common: Common {
                 co_sensor: Some(decode_contents[25].to_string()),
                 co2_sensor: Some(decode_contents[26].to_string()),
                 co_sensor_fault: Some(decode_contents[27].to_string()),
-                co2_sensor_fault: Some(decode_contents[28].to_string()),
+                co2_sensor_fault: Some(decode_contents[28].to_string())
             }
         }),
         status: "success".to_string()
