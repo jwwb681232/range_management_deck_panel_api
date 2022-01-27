@@ -48,7 +48,7 @@ async fn main() -> std::io::Result<()> {
             .service(deck1_2_service())
             .service(deck5_service())
         )
-        .bind("0.0.0.1:10086")?
+        .bind("0.0.0.0:10086")?
         .run()
         .await
 }
