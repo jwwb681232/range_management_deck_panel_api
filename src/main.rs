@@ -1,5 +1,6 @@
-use actix_web::{App, HttpServer, middleware::Logger};
+use actix_web::{App, http, HttpServer, middleware::Logger};
 use crate::router::{deck1_1_service,deck1_2_service,deck5_service};
+use actix_cors::Cors;
 
 mod error;
 mod response;
@@ -30,8 +31,18 @@ pub struct Deck {
 async fn main() -> std::io::Result<()> {
     init();
 
-    HttpServer::new(||
+    HttpServer::new(||{
+        let cors = Cors::default()
+            .allowed_origin_fn(|origin, _req_head| {
+                origin.as_bytes().starts_with(b"http")
+            })
+            .allowed_methods(vec!["GET", "POST"])
+            .allowed_headers(vec![http::header::AUTHORIZATION, http::header::ACCEPT])
+            .allowed_header(http::header::CONTENT_TYPE)
+            .max_age(3600);
+
         App::new()
+            .wrap(cors)
             .data(Deck {
                 file_path: std::env::var("FILE_DIR").unwrap_or("./".to_string()),
                 files: ReadWriteFile {
@@ -47,7 +58,7 @@ async fn main() -> std::io::Result<()> {
             .service(deck1_1_service())
             .service(deck1_2_service())
             .service(deck5_service())
-        )
+        })
         .bind("0.0.0.0:10086")?
         .run()
         .await
