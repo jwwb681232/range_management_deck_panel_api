@@ -57,6 +57,7 @@ pub struct Status {
     ahu_bst_d12:AhuBstD12,
     ahu_bst_d13:AhuBstD13,
     common:Common,
+    isolate:Option<String>
 }
 
 
@@ -67,7 +68,7 @@ pub async fn index(deck: web::Data<Deck>) -> Result<impl Responder> {
     open_file(&deck,&deck.files.deck1_1_read,false)?.read_to_string(&mut contents).unwrap();
     let mut decode_contents: Vec<String> = contents.split(";").map(|s| s.to_string()).collect();
 
-    while decode_contents.len() < 29 {
+    while decode_contents.len() < 30 {
         decode_contents.push("".to_string());
     }
 
@@ -111,7 +112,8 @@ pub async fn index(deck: web::Data<Deck>) -> Result<impl Responder> {
                 co2_sensor: Some(decode_contents[26].to_string()),
                 co_sensor_fault: Some(decode_contents[27].to_string()),
                 co2_sensor_fault: Some(decode_contents[28].to_string())
-            }
+            },
+            isolate: Some(decode_contents[30].to_string()),
         }),
         status: "success".to_string()
     };
